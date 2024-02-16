@@ -29,9 +29,26 @@ class IMEICommandGenerator:
             "Verizon Firmware Update": "maintenance lte-at IMEI AT!IMPREF=\"VERIZON\""
         }
 
+        self.row_num = 2
+
+        # Create buttons for each action to generate the command
+        for action, command in self.commands.items():
+            tk.Label(master, text=action).grid(row=self.row_num, column=0, padx=5, pady=5, sticky="w")
+            tk.Button(master, text="Generate", command=lambda a=action: self.generate_command(a)).grid(row=self.row_num, column=1, padx=5, pady=5)
+            self.row_num += 1
+
+        # Create input field for State
+        tk.Label(master, text="VZ-APN State:").grid(row=self.row_num, column=0, padx=5, pady=5, sticky="w")
+        self.state_entry = tk.Entry(master)
+        self.state_entry.grid(row=self.row_num, column=1, padx=5, pady=5)
+
+        # Button to generate the configuration
+        generate_button = tk.Button(master, text="Generate VZ profile Config", command=self.generate_config)
+        generate_button.grid(row=self.row_num + 1, columnspan=2, pady=10)
+
     # Function to generate and copy the configuration for changing to the proper region based on the state input
-    def generate_config():
-        state = state_entry.get().upper()
+    def generate_config(self):
+        state = self.state_entry.get().upper()
         
         if state not in ['AK', 'WA', 'MT', 'OR', 'ID', 'WY', 'NV', 'CA', 'AZ', 'NM',
                         'TX', 'OK', 'AR', 'LA', 'MS', 'TN', 'AL', 'GA', 'SC', 'NC', 'FL',
@@ -40,6 +57,13 @@ class IMEICommandGenerator:
             pyperclip.copy("Invalid state entered.")
             return
         
+        apn_mappings = {
+            "Region1": ['AK', 'WA', 'MT', 'OR', 'ID', 'WY', 'NV', 'CA'],
+            "Region2": ['AZ', 'NM', 'TX', 'OK', 'AR', 'LA', 'MS', 'TN', 'AL', 'GA', 'SC', 'NC', 'FL'],
+            "Region3": ['ND', 'SD', 'NE', 'KS', 'MN', 'IA', 'MO', 'WI', 'MI', 'IN', 'IL', 'KY', 'OH', 'PA', 'WV'],
+            "Region4": ['ME', 'VT', 'NH', 'MA', 'CT', 'RI', 'NY', 'PA', 'NJ', 'DE', 'DC', 'MD', 'VA']
+        }
+
         for region, states in apn_mappings.items():
             if state in states:
                 regional_apn = states[0]
@@ -57,31 +81,7 @@ class IMEICommandGenerator:
                             main"""
         pyperclip.copy(config_template)
         messagebox.showinfo("Config Generated", "Configuration copied to clipboard.")
-
-
-        # Create buttons for each action to generate the command
-        row_num = 2
-        for action, command in commands.items():
-            tk.Label(root, text=action).grid(row=row_num, column=0, padx=5, pady=5, sticky="w")
-            tk.Button(root, text="Generate", command=lambda a=action: generate_command(a)).grid(row=row_num, column=1, padx=5, pady=5)
-            row_num += 1
-
-        # Create input field for State
-        tk.Label(root, text="VZ-APN State:").grid(row=row_num, column=0, padx=5, pady=5, sticky="w")
-        state_entry = tk.Entry(root)
-        state_entry.grid(row=row_num, column=1, padx=5, pady=5)
-
-        # Button to generate the configuration
-        generate_button = tk.Button(root, text="Generate VZ profile Config", command=generate_config)
-        generate_button.grid(row=row_num + 1, columnspan=2, pady=10)
-
-
-        # Create buttons for each action to generate the command
-        row_num = 2
-        for action, command in self.commands.items():
-            tk.Label(master, text=action).grid(row=row_num, column=0, padx=5, pady=5, sticky="w")
-            tk.Button(master, text="Generate", command=lambda a=action: self.generate_command(a)).grid(row=row_num, column=1, padx=5, pady=5)
-            row_num += 1
+            
 
     def generate_command(self, action):
         imei = self.imei_entry.get()

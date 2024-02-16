@@ -4,8 +4,6 @@ import pyperclip
 import random
 import logging
 
-
-
 class IMEICommandGenerator:
     def __init__(self, master):
         self.master = master
@@ -30,6 +28,53 @@ class IMEICommandGenerator:
             "TMO/ATT Firmware Update": "maintenance lte-at IMEI AT!IMPREF=\"GENERIC\"",
             "Verizon Firmware Update": "maintenance lte-at IMEI AT!IMPREF=\"VERIZON\""
         }
+
+    # Function to generate and copy the configuration for changing to the proper region based on the state input
+    def generate_config():
+        state = state_entry.get().upper()
+        
+        if state not in ['AK', 'WA', 'MT', 'OR', 'ID', 'WY', 'NV', 'CA', 'AZ', 'NM',
+                        'TX', 'OK', 'AR', 'LA', 'MS', 'TN', 'AL', 'GA', 'SC', 'NC', 'FL',
+                        'ND', 'SD', 'NE', 'KS', 'MN', 'IA', 'MO', 'WI', 'MI', 'IN', 'IL', 'KY', 'OH', 'PA', 'WV',
+                        'ME', 'VT', 'NH', 'MA', 'CT', 'RI', 'NY', 'PA', 'NJ', 'DE', 'DC', 'MD', 'VA']:
+            pyperclip.copy("Invalid state entered.")
+            return
+        
+        for region, states in apn_mappings.items():
+            if state in states:
+                regional_apn = states[0]
+                break
+
+        config_template = f"""configure
+                            pdp-profile "VZ-Static"
+                                apn-id "1"
+                                apn {regional_apn}
+                                back
+                                mobile-country-code "311"
+                                mobile-network-code "480"
+                                back
+                            commit
+                            main"""
+        pyperclip.copy(config_template)
+        messagebox.showinfo("Config Generated", "Configuration copied to clipboard.")
+
+
+        # Create buttons for each action to generate the command
+        row_num = 2
+        for action, command in commands.items():
+            tk.Label(root, text=action).grid(row=row_num, column=0, padx=5, pady=5, sticky="w")
+            tk.Button(root, text="Generate", command=lambda a=action: generate_command(a)).grid(row=row_num, column=1, padx=5, pady=5)
+            row_num += 1
+
+        # Create input field for State
+        tk.Label(root, text="VZ-APN State:").grid(row=row_num, column=0, padx=5, pady=5, sticky="w")
+        state_entry = tk.Entry(root)
+        state_entry.grid(row=row_num, column=1, padx=5, pady=5)
+
+        # Button to generate the configuration
+        generate_button = tk.Button(root, text="Generate VZ profile Config", command=generate_config)
+        generate_button.grid(row=row_num + 1, columnspan=2, pady=10)
+
 
         # Create buttons for each action to generate the command
         row_num = 2
@@ -98,7 +143,8 @@ class IMEICommandGenerator:
 
         # Configure the logging
         logging.basicConfig(filename='error.log', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
-        
+
+
         # IMEI code empty error
         if not imei:
             self.show_random_error()
@@ -114,7 +160,7 @@ class IMEICommandGenerator:
         # IMEI code is too long  
         if len(imei) > 15:
             self.show_random_long_error()
-            logging.debug("An error occurred: too long", self) 
+            logging.debug("An error occurred: too long", self)
             return
 
         # IMEI code has a letter in it

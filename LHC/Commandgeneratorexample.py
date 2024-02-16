@@ -138,7 +138,17 @@ class IMEICommandGenerator:
             "Check for letters.",
             "The IMEI can only be integers",
             "Please delete any letters"
-            
+           
+        ]
+
+        # APN errors
+        self.apn_error_messages = [
+            # "Your power level is clearly under 9000.",
+            # "Fact: That input was trash."
+            "The IMEI is too long.",
+            "Try again, it's too long.",
+            "It's an IMEI number not a python. Shorten it to 15 integers",
+            "I always got yelled at for keeping the fridge open too long."
         ]
 
         # Configure the logging

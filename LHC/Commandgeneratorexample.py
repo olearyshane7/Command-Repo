@@ -2,6 +2,9 @@ import tkinter as tk
 from tkinter import messagebox
 import pyperclip
 import random
+import logging
+
+
 
 class IMEICommandGenerator:
     def __init__(self, master):
@@ -89,28 +92,35 @@ class IMEICommandGenerator:
             # "Try again!"
             "Check for letters.",
             "The IMEI can only be integers",
-            "Please delete any letters",
-            ""
+            "Please delete any letters"
+            
         ]
 
+        # Configure the logging
+        logging.basicConfig(filename='error.log', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+        
         # IMEI code empty error
         if not imei:
             self.show_random_error()
+            logging.debug("An error occurred: Blank box", self) 
             return
         
         # IMEI code too short
         if len(imei) < 15:
             self.show_random_short_error()
+            logging.debug("An error occurred: Too short", self) 
             return
         
         # IMEI code is too long  
         if len(imei) > 15:
             self.show_random_long_error()
+            logging.debug("An error occurred: too long", self) 
             return
 
         # IMEI code has a letter in it
         if not imei.isdigit():
             self.show_random_letter_error()
+            logging.debug("An error occurred: contains a letter", self) 
             return
         
         command = self.commands[action]
@@ -129,32 +139,34 @@ class IMEICommandGenerator:
         pyperclip.copy(command_with_imei)
         
         # Display the formatted command in a messagebox
-        messagebox.showinfo(action, f"Congratulations! You know how to copy and paste!\n\n{command_with_imei}")
+        messagebox.showinfo(action, f"IMEI command copied to clipboard:\n\n{command_with_imei}")
 
     def copy_initial_command(self):
         initial_command = "show interface lte detail | match IMEI"
         pyperclip.copy(initial_command)
         messagebox.showinfo("IMEI Command", f"IMEI command copied to clipboard:\n\n{initial_command}")
 
-
     def show_random_error(self):
         random_error = random.choice(self.error_messages)      
-        messagebox.showerror("Error", random_error) 
+        messagebox.showerror("Error", random_error)
 
     # IMEI Short Error messages
     def show_random_short_error(self):
         random_error = random.choice(self.short_error_messages)
-        messagebox.showerror("Error", random_error) 
+        messagebox.showerror("Error", random_error)
+         
     
     # IMEI Long Error messages
     def show_random_long_error(self):
         random_error = random.choice(self.long_error_messages)
-        messagebox.showerror("Error", random_error) 
+        messagebox.showerror("Error", random_error)
+         
 
     # IMEI String error messages
     def show_random_letter_error(self):
         random_error = random.choice(self.letter_error_messages)
-        messagebox.showerror("Error", random_error)         
+        messagebox.showerror("Error", random_error)
+        
 
 # Create the main window
 root = tk.Tk()

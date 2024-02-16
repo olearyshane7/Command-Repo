@@ -91,7 +91,7 @@ class IMEICommandGenerator:
             "Check for letters.",
             "The IMEI can only be integers",
             "Please delete any letters",
-            ""
+            "Error: IMEI can only consist of numbers."
         ]
 
         # Configure the logging

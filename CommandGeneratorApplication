@@ -74,9 +74,9 @@ class IMEICommandGenerator:
 
         # Create buttons for each action to generate the command
         row_num = 2
-        for action, command in commands.items():
-            tk.Label(root, text=action).grid(row=row_num, column=0, padx=5, pady=5, sticky="w")
-            tk.Button(root, text="Generate", command=lambda a=action: generate_command(a)).grid(row=row_num, column=1, padx=5, pady=5)
+        for action, command in self.commands.items():
+            tk.Label(master, text=action).grid(row=row_num, column=0, padx=5, pady=5, sticky="w")
+            tk.Button(master, text="Generate", command=lambda a=action: self.generate_command(a)).grid(row=row_num, column=1, padx=5, pady=5)
             row_num += 1
 
         # Create input field for State

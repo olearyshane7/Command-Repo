@@ -29,7 +29,7 @@ class IMEICommandGenerator:
             "Verizon Firmware Update": "maintenance lte-at IMEI AT!IMPREF=\"VERIZON\""
         }
 
-        # Function to generate and copy the configuration for changing to the proper region based on the state input
+    # Function to generate and copy the configuration for changing to the proper region based on the state input
     def generate_config():
         state = state_entry.get().upper()
         

@@ -59,6 +59,22 @@ class IMEICommandGenerator:
         messagebox.showinfo("Config Generated", "Configuration copied to clipboard.")
 
 
+        # Create buttons for each action to generate the command
+        row_num = 2
+        for action, command in commands.items():
+            tk.Label(root, text=action).grid(row=row_num, column=0, padx=5, pady=5, sticky="w")
+            tk.Button(root, text="Generate", command=lambda a=action: generate_command(a)).grid(row=row_num, column=1, padx=5, pady=5)
+            row_num += 1
+
+        # Create input field for State
+        tk.Label(root, text="VZ-APN State:").grid(row=row_num, column=0, padx=5, pady=5, sticky="w")
+        state_entry = tk.Entry(root)
+        state_entry.grid(row=row_num, column=1, padx=5, pady=5)
+
+        # Button to generate the configuration
+        generate_button = tk.Button(root, text="Generate VZ profile Config", command=generate_config)
+        generate_button.grid(row=row_num + 1, columnspan=2, pady=10)
+
 
         # Create buttons for each action to generate the command
         row_num = 2

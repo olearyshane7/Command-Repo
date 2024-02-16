@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 import pyperclip
 import random
+import logging
 
 class IMEICommandGenerator:
     def __init__(self, master):
@@ -93,24 +94,32 @@ class IMEICommandGenerator:
             ""
         ]
 
+        # Configure the logging
+        logging.basicConfig(filename='error.log', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+
+
         # IMEI code empty error
         if not imei:
             self.show_random_error()
+            logging.debug("An error occurred: Blank box", self) 
             return
         
         # IMEI code too short
         if len(imei) < 15:
             self.show_random_short_error()
+            logging.debug("An error occurred: Too short", self) 
             return
         
         # IMEI code is too long  
         if len(imei) > 15:
             self.show_random_long_error()
+            logging.debug("An error occurred: too long", self)
             return
 
         # IMEI code has a letter in it
         if not imei.isdigit():
             self.show_random_letter_error()
+            logging.debug("An error occurred: contains a letter", self) 
             return
         
         command = self.commands[action]

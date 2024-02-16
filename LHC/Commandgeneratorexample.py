@@ -63,23 +63,43 @@ class IMEICommandGenerator:
             "Region4": ['ME', 'VT', 'NH', 'MA', 'CT', 'RI', 'NY', 'PA', 'NJ', 'DE', 'DC', 'MD', 'VA']
         }
 
+        # Define the APN mappings for each region
+        apn_mappings = {
+            'WE': ['WE01.VZWSTATIC'],
+            'MW': ['MW01.VZWSTATIC'],
+            'SO': ['SO01.VZWSTATIC'],
+            'NE': ['NE01.VZWSTATIC']
+        }
+
+        # Update the APN lists for each region
+        apn_mappings['WE'].extend(['AK', 'WA', 'MT', 'OR', 'ID', 'WY', 'NV', 'CA', 'AZ', 'NM'])
+        apn_mappings['SO'].extend(['TX', 'OK', 'AR', 'LA', 'MS', 'TN', 'AL', 'GA', 'SC', 'NC', 'FL'])
+        apn_mappings['MW'].extend(['ND', 'SD', 'NE', 'KS', 'MN', 'IA', 'MO', 'WI', 'MI', 'IN', 'IL', 'KY', 'OH', 'PA', 'WV'])
+        apn_mappings['NE'].extend(['ME', 'VT', 'NH', 'MA', 'CT', 'RI', 'NY', 'PA', 'NJ', 'DE', 'DC', 'MD', 'VA'])
+
         for region, states in apn_mappings.items():
             if state in states:
                 regional_apn = states[0]
                 break
 
-        config_template = f"""configure
-                            pdp-profile "VZ-Static"
-                                apn-id "1"
-                                apn {regional_apn}
-                                back
-                                mobile-country-code "311"
-                                mobile-network-code "480"
-                                back
-                            commit
-                            main"""
+        config_template = f"""
+configure
+    pdp-profile "VZ-Static"
+        apn-id "1"
+            apn {regional_apn}
+            back
+        mobile-country-code "311"
+        mobile-network-code "480"
+        back
+    commit
+main"""
         pyperclip.copy(config_template)
         messagebox.showinfo("Config Generated", "Configuration copied to clipboard.")
+
+        # if not self.state:
+        #     self.show_apn_letter_error()
+        #     logging.debug("An error occurred: APN incorrect", self) 
+        #     return
             
 
     def generate_command(self, action):
@@ -178,10 +198,6 @@ class IMEICommandGenerator:
             logging.debug("An error occurred: contains a letter", self) 
             return
         
-        if not self.state:
-            self.show_apn_letter_error()
-            logging.debug("An error occurred: APN incorrect", self) 
-            return
         
         command = self.commands[action]
         

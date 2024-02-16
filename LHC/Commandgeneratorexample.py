@@ -54,7 +54,6 @@ class IMEICommandGenerator:
                         'TX', 'OK', 'AR', 'LA', 'MS', 'TN', 'AL', 'GA', 'SC', 'NC', 'FL',
                         'ND', 'SD', 'NE', 'KS', 'MN', 'IA', 'MO', 'WI', 'MI', 'IN', 'IL', 'KY', 'OH', 'PA', 'WV',
                         'ME', 'VT', 'NH', 'MA', 'CT', 'RI', 'NY', 'PA', 'NJ', 'DE', 'DC', 'MD', 'VA']:
-            pyperclip.copy("Invalid state entered.")
             return
         
         apn_mappings = {
@@ -179,6 +178,11 @@ class IMEICommandGenerator:
             logging.debug("An error occurred: contains a letter", self) 
             return
         
+        if not self.state:
+            self.show_apn_letter_error()
+            logging.debug("An error occurred: APN incorrect", self) 
+            return
+        
         command = self.commands[action]
         
         # Special handling for swap commands to change the last character
@@ -222,7 +226,11 @@ class IMEICommandGenerator:
     def show_random_letter_error(self):
         random_error = random.choice(self.letter_error_messages)
         messagebox.showerror("Error", random_error)
-        
+    
+    # APN error messages
+    def show_apn_letter_error(self):
+        random_error = random.choice(self.apn_error_messages)
+        messagebox.showerror("Error", random_error)
 
 # Create the main window
 root = tk.Tk()

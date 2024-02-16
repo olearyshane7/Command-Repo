@@ -29,6 +29,36 @@ class IMEICommandGenerator:
             "Verizon Firmware Update": "maintenance lte-at IMEI AT!IMPREF=\"VERIZON\""
         }
 
+        # Function to generate and copy the configuration for changing to the proper region based on the state input
+    def generate_config():
+        state = state_entry.get().upper()
+        
+        if state not in ['AK', 'WA', 'MT', 'OR', 'ID', 'WY', 'NV', 'CA', 'AZ', 'NM',
+                        'TX', 'OK', 'AR', 'LA', 'MS', 'TN', 'AL', 'GA', 'SC', 'NC', 'FL',
+                        'ND', 'SD', 'NE', 'KS', 'MN', 'IA', 'MO', 'WI', 'MI', 'IN', 'IL', 'KY', 'OH', 'PA', 'WV',
+                        'ME', 'VT', 'NH', 'MA', 'CT', 'RI', 'NY', 'PA', 'NJ', 'DE', 'DC', 'MD', 'VA']:
+            pyperclip.copy("Invalid state entered.")
+            return
+        
+        for region, states in apn_mappings.items():
+            if state in states:
+                regional_apn = states[0]
+                break
+
+        config_template = f"""configure
+                            pdp-profile "VZ-Static"
+                                apn-id "1"
+                                apn {regional_apn}
+                                back
+                                mobile-country-code "311"
+                                mobile-network-code "480"
+                                back
+                            commit
+                            main"""
+        pyperclip.copy(config_template)
+        messagebox.showinfo("Config Generated", "Configuration copied to clipboard.")
+
+
         # Create buttons for each action to generate the command
         row_num = 2
         for action, command in self.commands.items():

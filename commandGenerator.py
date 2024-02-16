@@ -2,6 +2,10 @@ import tkinter as tk
 from tkinter import messagebox
 import pyperclip
 
+#USE this IMEI mock for testing puposes
+
+
+
 # Function to generate and display the command for a specific action
 def generate_command(action):
     imei = imei_entry.get()

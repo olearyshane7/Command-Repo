@@ -136,7 +136,7 @@ main"""
         
         # IMEI code empty error
         if not imei:
-            self.show_random_error(self)
+            self.show_random_error()
             logging.debug(f"An error occurred: Blank box")
             return  
         

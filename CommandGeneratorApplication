@@ -106,8 +106,8 @@ class IMEICommandGenerator:
 
         # Update the APN lists for each region
         apn_mappings['WE'].extend(['AK', 'WA', 'MT', 'OR', 'ID', 'WY', 'NV', 'CA', 'AZ', 'NM'])
-        apn_mappings['SO'].extend(['TX', 'OK', 'AR', 'LA', 'MS', 'TN', 'AL', 'GA', 'SC', 'NC', 'FL'])
-        apn_mappings['MW'].extend(['ND', 'SD', 'NE', 'KS', 'MN', 'IA', 'MO', 'WI', 'MI', 'IN', 'IL', 'KY', 'OH', 'PA', 'WV'])
+        apn_mappings['SO'].extend(['TX', 'OK', 'AR', 'LA', 'TN', 'AL', 'GA', 'SC', 'NC', 'FL'])
+        apn_mappings['MW'].extend(['ND', 'SD', 'NE', 'KS', 'MN', 'IA', 'MO', 'WI', 'MI', 'IN', 'IL', 'KY', 'OH', 'PA', 'WV', 'MS'])
         apn_mappings['NE'].extend(['ME', 'VT', 'NH', 'MA', 'CT', 'RI', 'NY', 'PA', 'NJ', 'DE', 'DC', 'MD', 'VA'])
 
         for region, states in apn_mappings.items():

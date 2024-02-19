@@ -4,6 +4,13 @@ import pyperclip
 import random
 import logging
 
+
+class InvalidStateException(Exception):
+    pass
+
+class InvalidIMEIException(Exception):
+    pass
+
 class IMEICommandGenerator:
     def __init__(self, master):
         self.master = master
@@ -14,8 +21,19 @@ class IMEICommandGenerator:
 
         # Create input field for IMEI
         tk.Label(master, text="IMEI:").grid(row=1, column=0, padx=5, pady=5, sticky="w")
-        self.imei_entry = tk.Entry(master)
+        self.imei_entry = tk.Entry(master, font=("Helvetica", 12), bd=2, relief="groove")  # Add border
         self.imei_entry.grid(row=1, column=1, padx=5, pady=5)
+
+        master.geometry("500x500")  # Set initial window size
+
+        self.row_num = 2
+
+        # Set a pleasing color scheme
+        master.configure(bg="#E6E6FA")
+
+        # Adjust column weights to make resizing look better
+        master.grid_columnconfigure(0, weight=1)
+        master.grid_columnconfigure(1, weight=1)
 
         # Define the commands for each action
         self.commands = {
@@ -39,22 +57,37 @@ class IMEICommandGenerator:
 
         # Create input field for State
         tk.Label(master, text="VZ-APN State:").grid(row=self.row_num, column=0, padx=5, pady=5, sticky="w")
-        self.state_entry = tk.Entry(master)
+        self.state_entry = tk.Entry(master, font=("Helvetica", 12), bd=2, relief="groove") 
         self.state_entry.grid(row=self.row_num, column=1, padx=5, pady=5)
 
         # Button to generate the configuration
         generate_button = tk.Button(master, text="Generate VZ profile Config", command=self.generate_config)
         generate_button.grid(row=self.row_num + 1, columnspan=2, pady=10)
 
+        # Bind the <Return> key to the generate_config function
+        self.state_entry.bind("<Return>", lambda event: self.generate_config())
+
     # Function to generate and copy the configuration for changing to the proper region based on the state input
     def generate_config(self):
         state = self.state_entry.get().upper()
+
+        # Set the filepath for the error log
+        self.error_log_filepath = "error.log"
+
+        # Configure the logging
+        logging.basicConfig(filename=self.error_log_filepath, level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
         
-        if state not in ['AK', 'WA', 'MT', 'OR', 'ID', 'WY', 'NV', 'CA', 'AZ', 'NM',
+        valid_states = ['AK', 'WA', 'MT', 'OR', 'ID', 'WY', 'NV', 'CA', 'AZ', 'NM',
                         'TX', 'OK', 'AR', 'LA', 'MS', 'TN', 'AL', 'GA', 'SC', 'NC', 'FL',
                         'ND', 'SD', 'NE', 'KS', 'MN', 'IA', 'MO', 'WI', 'MI', 'IN', 'IL', 'KY', 'OH', 'PA', 'WV',
-                        'ME', 'VT', 'NH', 'MA', 'CT', 'RI', 'NY', 'PA', 'NJ', 'DE', 'DC', 'MD', 'VA']:
-            return
+                        'ME', 'VT', 'NH', 'MA', 'CT', 'RI', 'NY', 'PA', 'NJ', 'DE', 'DC', 'MD', 'VA']
+        try:
+            if state not in valid_states:
+                raise InvalidStateException(f"Invalid state entered: {state}")
+        except InvalidStateException as e:
+            messagebox.showerror("Error", str(e))
+            logging.debug(str(e)) 
+            return    
         
         apn_mappings = {
             "Region1": ['AK', 'WA', 'MT', 'OR', 'ID', 'WY', 'NV', 'CA'],
@@ -95,15 +128,16 @@ configure
 main"""
         pyperclip.copy(config_template)
         messagebox.showinfo("Config Generated", "Configuration copied to clipboard.")
-
-        # if not self.state:
-        #     self.show_apn_letter_error()
-        #     logging.debug("An error occurred: APN incorrect", self) 
-        #     return
             
 
     def generate_command(self, action):
         imei = self.imei_entry.get()
+
+        # Set the filepath for the error log
+        self.error_log_filepath = "error.log"
+
+        # Configure the logging
+        logging.basicConfig(filename=self.error_log_filepath, level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
         # Array of randomly generated error messages
         # Commented error messages are passive aggressive statements. 
@@ -159,43 +193,30 @@ main"""
             "Please delete any letters"
            
         ]
-
-        # APN errors
-        self.apn_error_messages = [
-            # "Your power level is clearly under 9000.",
-            # "Fact: That input was trash."
-            "The IMEI is too long.",
-            "Try again, it's too long.",
-            "It's an IMEI number not a python. Shorten it to 15 integers",
-            "I always got yelled at for keeping the fridge open too long."
-        ]
-
-        # Configure the logging
-        logging.basicConfig(filename='error.log', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
-
+        
 
         # IMEI code empty error
         if not imei:
             self.show_random_error()
-            logging.debug("An error occurred: Blank box", self) 
-            return
+            logging.debug(f"An error occurred: Blank box")
+            return  
         
         # IMEI code too short
         if len(imei) < 15:
             self.show_random_short_error()
-            logging.debug("An error occurred: Too short", self) 
+            logging.debug(f"An error occurred: IMEI too short")
             return
         
         # IMEI code is too long  
         if len(imei) > 15:
             self.show_random_long_error()
-            logging.debug("An error occurred: too long", self)
+            logging.debug(f"An error occurred: IMEI too long")
             return
 
         # IMEI code has a letter in it
         if not imei.isdigit():
             self.show_random_letter_error()
-            logging.debug("An error occurred: contains a letter", self) 
+            logging.debug(f"An error occurred: Includes a letter.")
             return
         
         
@@ -241,11 +262,6 @@ main"""
     # IMEI String error messages
     def show_random_letter_error(self):
         random_error = random.choice(self.letter_error_messages)
-        messagebox.showerror("Error", random_error)
-    
-    # APN error messages
-    def show_apn_letter_error(self):
-        random_error = random.choice(self.apn_error_messages)
         messagebox.showerror("Error", random_error)
 
 # Create the main window

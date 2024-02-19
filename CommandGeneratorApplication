@@ -91,8 +91,8 @@ class IMEICommandGenerator:
         
         apn_mappings = {
             "Region1": ['AK', 'WA', 'MT', 'OR', 'ID', 'WY', 'NV', 'CA'],
-            "Region2": ['AZ', 'NM', 'TX', 'OK', 'AR', 'LA', 'MS', 'TN', 'AL', 'GA', 'SC', 'NC', 'FL'],
-            "Region3": ['ND', 'SD', 'NE', 'KS', 'MN', 'IA', 'MO', 'WI', 'MI', 'IN', 'IL', 'KY', 'OH', 'PA', 'WV'],
+            "Region2": ['AZ', 'NM', 'TX', 'OK', 'AR', 'LA', 'TN', 'AL', 'GA', 'SC', 'NC', 'FL'],
+            "Region3": ['ND', 'SD', 'NE', 'KS', 'MN', 'IA', 'MO', 'WI', 'MI', 'IN', 'IL', 'KY', 'OH', 'PA', 'WV', 'MS'],
             "Region4": ['ME', 'VT', 'NH', 'MA', 'CT', 'RI', 'NY', 'PA', 'NJ', 'DE', 'DC', 'MD', 'VA']
         }
 

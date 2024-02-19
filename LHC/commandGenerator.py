@@ -29,7 +29,7 @@ class IMEICommandGenerator:
         self.row_num = 2
 
         # Set a pleasing color scheme
-        master.configure(bg="#f0f0f0")
+        master.configure(bg="#E6E6FA")
 
         # Adjust column weights to make resizing look better
         master.grid_columnconfigure(0, weight=1)

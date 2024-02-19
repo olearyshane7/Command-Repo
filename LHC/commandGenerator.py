@@ -8,6 +8,8 @@ import logging
 class InvalidStateException(Exception):
     pass
 
+class InvalidIMEIException(Exception):
+    pass
 
 class IMEICommandGenerator:
     def __init__(self, master):
@@ -196,25 +198,25 @@ main"""
         # IMEI code empty error
         if not imei:
             self.show_random_error()
-            logging.debug("An error occurred: Blank box", self) 
-            return
+            logging.debug(f"An error occurred: Blank box")
+            return  
         
         # IMEI code too short
         if len(imei) < 15:
             self.show_random_short_error()
-            logging.debug("An error occurred: Too short", self) 
+            logging.debug(f"An error occurred: IMEI too short")
             return
         
         # IMEI code is too long  
         if len(imei) > 15:
             self.show_random_long_error()
-            logging.debug("An error occurred: too long", self)
+            logging.debug(f"An error occurred: IMEI too long")
             return
 
         # IMEI code has a letter in it
         if not imei.isdigit():
             self.show_random_letter_error()
-            logging.debug("An error occurred: contains a letter", self) 
+            logging.debug(f"An error occurred: Includes a letter.")
             return
         
         

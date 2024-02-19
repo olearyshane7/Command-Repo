@@ -1,1 +1,10 @@
 2024-02-19 09:21:05,657 - DEBUG - Invalid state entered: FDSFDS
+2024-02-19 09:26:09,265 - DEBUG - Invalid state entered: SFDSAF
+2024-02-19 09:26:10,985 - DEBUG - Invalid state entered: SFDSAF
+2024-02-19 09:39:55,893 - DEBUG - An error occurred: Blank box
+2024-02-19 09:40:12,123 - DEBUG - An error occurred: Blank box
+2024-02-19 09:40:17,444 - DEBUG - An error occurred: IMEI too short
+2024-02-19 09:40:22,135 - DEBUG - An error occurred: IMEI too long
+2024-02-19 09:40:32,892 - DEBUG - An error occurred: Includes a letter.
+2024-02-19 09:40:38,319 - DEBUG - Invalid state entered: BGFN
+2024-02-19 09:40:41,314 - DEBUG - Invalid state entered: BGFN

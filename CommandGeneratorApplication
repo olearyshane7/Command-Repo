@@ -150,18 +150,14 @@ main"""
         
         # IMEI is short
         self.short_error_messages = [
-            "The Etruscan shrew is the smallest mammal on earth, much like the IMEI input",
             "The IMEI is too short.",
-            "Try again, it's too short",
-            "Generally the playoff run of the Toronto Maple Leafs."
+            "Try again, it's too short"
         ]
 
         # IMEI is long
         self.long_error_messages = [
             "The IMEI is too long.",
-            "Try again, it's too long.",
-            "It's an IMEI number not a python. Shorten it to 15 integers",
-            "I always got yelled at for keeping the fridge open too long."
+            "Try again, it's too long."
         ]
 
         # IMEI has a letter

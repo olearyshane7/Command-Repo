@@ -140,8 +140,6 @@ main"""
         logging.basicConfig(filename=self.error_log_filepath, level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
         # Array of randomly generated error messages
-        # Commented error messages are passive aggressive statements. 
-        # Only activate commented error messages if you have a strong heart and mind.
 
         # IMEI is blank
         self.error_messages = [

@@ -25,14 +25,14 @@ class ConfigTemplate:
         }
 
 
-        self.config_template_IMEI = f"""
-configure
-    pdp-profile "VZ-Static"
-        apn-id "1"
-            apn {regional_apn}
-            back
-        mobile-country-code "311"
-        mobile-network-code "480"
-        back
-    commit
-main"""
+#         self.config_template_IMEI = f"""
+# configure
+#     pdp-profile "VZ-Static"
+#         apn-id "1"
+#             apn {regional_apn}
+#             back
+#         mobile-country-code "311"
+#         mobile-network-code "480"
+#         back
+#     commit
+# main"""

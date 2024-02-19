@@ -78,44 +78,22 @@ class IMEICommandGenerator:
 
         # Configure the logging
         logging.basicConfig(filename=self.error_log_filepath, level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
-        
-        valid_states = ['AK', 'WA', 'MT', 'OR', 'ID', 'WY', 'NV', 'CA', 'AZ', 'NM',
-                        'TX', 'OK', 'AR', 'LA', 'MS', 'TN', 'AL', 'GA', 'SC', 'NC', 'FL',
-                        'ND', 'SD', 'NE', 'KS', 'MN', 'IA', 'MO', 'WI', 'MI', 'IN', 'IL', 'KY', 'OH', 'PA', 'WV',
-                        'ME', 'VT', 'NH', 'MA', 'CT', 'RI', 'NY', 'PA', 'NJ', 'DE', 'DC', 'MD', 'VA']
-        try:
-            if state not in valid_states:
-                raise InvalidStateException(f"Invalid state entered: {state}")
-        except InvalidStateException as e:
-            messagebox.showerror("Error", str(e))
-            logging.debug(str(e)) 
-            return    
-        
-        apn_mappings = {
-            "Region1": ['AK', 'WA', 'MT', 'OR', 'ID', 'WY', 'NV', 'CA'],
-            "Region2": ['AZ', 'NM', 'TX', 'OK', 'AR', 'LA', 'MS', 'TN', 'AL', 'GA', 'SC', 'NC', 'FL'],
-            "Region3": ['ND', 'SD', 'NE', 'KS', 'MN', 'IA', 'MO', 'WI', 'MI', 'IN', 'IL', 'KY', 'OH', 'PA', 'WV'],
-            "Region4": ['ME', 'VT', 'NH', 'MA', 'CT', 'RI', 'NY', 'PA', 'NJ', 'DE', 'DC', 'MD', 'VA']
-        }
 
-        # Define the APN mappings for each region
-        apn_mappings = {
-            'WE': ['WE01.VZWSTATIC'],
-            'MW': ['MW01.VZWSTATIC'],
-            'SO': ['SO01.VZWSTATIC'],
-            'NE': ['NE01.VZWSTATIC']
-        }
+        region1 = ['AK', 'WA', 'MT', 'OR', 'ID', 'WY', 'NV', 'CA', 'UT', 'CO', 'NM', 'AZ']
+        region2 = ['TX', 'OK', 'AR', 'LA', 'MS', 'TN', 'AL', 'GA', 'SC', 'NC', 'FL']
+        region3 = ['ND', 'SD', 'NE', 'KS', 'MN', 'IA', 'MO', 'WI', 'MI', 'IN', 'IL', 'KY', 'OH', 'PA', 'WV']
+        region4 = ['ME', 'VT', 'NH', 'MA', 'CT', 'RI', 'NY', 'PA', 'NJ', 'DE', 'DC', 'MD', 'VA']
 
-        # Update the APN lists for each region
-        apn_mappings['WE'].extend(['AK', 'WA', 'MT', 'OR', 'ID', 'WY', 'NV', 'CA', 'AZ', 'NM'])
-        apn_mappings['SO'].extend(['TX', 'OK', 'AR', 'LA', 'MS', 'TN', 'AL', 'GA', 'SC', 'NC', 'FL'])
-        apn_mappings['MW'].extend(['ND', 'SD', 'NE', 'KS', 'MN', 'IA', 'MO', 'WI', 'MI', 'IN', 'IL', 'KY', 'OH', 'PA', 'WV'])
-        apn_mappings['NE'].extend(['ME', 'VT', 'NH', 'MA', 'CT', 'RI', 'NY', 'PA', 'NJ', 'DE', 'DC', 'MD', 'VA'])
-
-        for region, states in apn_mappings.items():
-            if state in states:
-                regional_apn = states[0]
-                break
+        if state in region1:
+            regional_apn = 'WE01.VZWSTATIC'
+        elif state in region2:
+            regional_apn = 'SO01.VZWSTATIC'
+        elif state in region3:
+            regional_apn = 'MW01.VZWSTATIC'
+        elif state in region4:
+            regional_apn = 'NE01.VZWSTATIC'
+        else:
+            raise InvalidStateException(f"Invalid state entered: {state}") 
 
         config_template = f"""
 configure
@@ -129,7 +107,7 @@ configure
     commit
 main"""
         pyperclip.copy(config_template)
-        messagebox.showinfo("Config Generated", "Configuration copied to clipboard.")
+        messagebox.showinfo("Config Generated", "Configuration copied to clipboard.") 
             
 
     def generate_command(self, action):

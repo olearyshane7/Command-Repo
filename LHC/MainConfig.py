@@ -25,6 +25,8 @@ class ConfigTemplate:
         }
 
 
+        
+
 #         self.config_template_IMEI = f"""
 # configure
 #     pdp-profile "VZ-Static"

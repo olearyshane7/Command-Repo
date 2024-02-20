@@ -22,3 +22,6 @@
 2024-02-19 16:46:42,631 - DEBUG - An error occurred: IMEI too short
 2024-02-19 16:47:47,898 - DEBUG - An error occurred: IMEI too short
 2024-02-19 16:47:50,995 - DEBUG - An error occurred: IMEI too long
+2024-02-19 16:49:29,419 - DEBUG - An error occurred: Blank box
+2024-02-20 16:03:37,323 - DEBUG - Invalid state entered: 
+2024-02-20 16:03:40,920 - DEBUG - Invalid state entered: FNFN

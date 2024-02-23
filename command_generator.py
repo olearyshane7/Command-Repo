@@ -12,12 +12,14 @@ class InvalidIMEIException(Exception):
 # Define generate_command as a function
 def generate_command(self, action):
     imei = self.imei_entry.get()
+    # imeiTestVal = 359820329511503
+    # print(imeiTestVal)
 
     # Set the filepath for the error log
     self.error_log_filepath = "error.log"
 
     # Configure the logging
-    logging.basicConfig(filename=self.error_log_filepath, level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+    logging.basicConfig(filename=self.error_log_filepath, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
     # Array of randomly generated error messages
     # Commented error messages are passive aggressive statements.
@@ -105,7 +107,7 @@ def generate_command(self, action):
         last_char = "1" if action.endswith("2") else "0"
         command = command[:-1] + last_char
 
-    command_with_imei = command.replace("IMEI", imei)
+    command_with_imei = command.replace("IMEI", imei)   #this is where the IMEI is being replaced
 
     # Special handling for the last command to ensure correct formatting
     if action == "TMO/ATT Firmware Update" or action == "Verizon Firmware Update":

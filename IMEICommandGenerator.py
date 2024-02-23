@@ -46,6 +46,7 @@ class IMEICommandGenerator:
         # Create buttons for each action to generate the command
         for action, command in self.commands.items():
             ttk.Label(master, text=action).grid(row=self.row_num, column=0, padx=5, pady=5, sticky="w")
+            
             ttk.Button(master, text="Generate", command=lambda a=action: command_generator.generate_command(self, a)).grid(row=self.row_num,
                                                                                                           column=1,
                                                                                                           padx=5, pady=5)

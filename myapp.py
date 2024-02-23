@@ -7,6 +7,9 @@ from tkinter.constants import END
 from helpers import generate_config
 import command_generator
 import command_data
+from UpdateIPConfig import generate_ip_config
+from ipaddress import IPv4Network 
+
 
 class IMEICommandGenerator:
     def __init__(self, master):
@@ -24,7 +27,7 @@ class IMEICommandGenerator:
         self.imei_entry = ttk.Entry(self.imei_frame, font=("Helvetica", 12), width=17)
         self.imei_entry.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
 
-        master.geometry("500x500")  # Set initial window size
+        master.geometry("800x800")  # Set initial window size
 
         self.row_num = 2
 
@@ -48,17 +51,55 @@ class IMEICommandGenerator:
                                                                                                           padx=5, pady=5)
             self.row_num += 1
 
+        # Create input fields for UpdateIpConfig parameters
+        ttk.Label(master, text="IP Interface:").grid(row=self.row_num, column=0, padx=5, pady=5, sticky="w")
+        self.ip_interface = ttk.Entry(master, font=("Helvetica", 12), width=20)
+        self.ip_interface.grid(row=self.row_num, column=1, padx=5, pady=5)
+
+        self.row_num += 1
+
+        ttk.Label(master, text="Usable CIDR:").grid(row=self.row_num, column=0, padx=5, pady=5, sticky="w")
+        self.usable_in_cidr = ttk.Entry(master, font=("Helvetica", 12), width=20)
+        self.usable_in_cidr.grid(row=self.row_num, column=1, padx=5, pady=5)
+
+        self.row_num += 1
+
+        ttk.Label(master, text="VRF Number:").grid(row=self.row_num, column=0, padx=5, pady=5, sticky="w")
+        self.vrf_number = ttk.Entry(master, font=("Helvetica", 12), width=20)
+        self.vrf_number.grid(row=self.row_num, column=1, padx=5, pady=5)
+
+        self.row_num += 1
+
+        ttk.Label(master, text="Gateway IP:").grid(row=self.row_num, column=0, padx=5, pady=5, sticky="w")
+        self.gw_ip = ttk.Entry(master, font=("Helvetica", 12), width=20)
+        self.gw_ip.grid(row=self.row_num, column=1, padx=5, pady=5)
+
+        self.row_num += 1
+
+        ttk.Label(master, text="Network CIDR:").grid(row=self.row_num, column=0, padx=5, pady=5, sticky="w")
+        self.network_in_cidr = ttk.Entry(master, font=("Helvetica", 12), width=20)
+        self.network_in_cidr.grid(row=self.row_num, column=1, padx=5, pady=5)
+
+        self.row_num += 1
+
         # Create input field for State
         ttk.Label(master, text="VZ-APN State:").grid(row=self.row_num, column=0, padx=5, pady=5, sticky="w")
         self.state_entry = ttk.Entry(master, font=("Helvetica", 12), width=20)
         self.state_entry.grid(row=self.row_num, column=1, padx=5, pady=5)
 
+        # Button to update the values
+        update_button = ttk.Button(master, text="Update IPs", command=lambda: generate_ip_config(self.ip_interface, self.usable_in_cidr, self.vrf_number, self.gw_ip, self.network_in_cidr))
+        update_button.grid(row=17, column=0, padx=40, pady=5, sticky="w")
+
         # Button to generate the configuration
         generate_button = ttk.Button(master, text="Generate VZ profile Config", command=lambda: generate_config(self.state_entry))
-        generate_button.grid(row=self.row_num + 1, columnspan=2, pady=10)
+        generate_button.grid(row=17, column=0, padx=40, pady=5, sticky="e")     
 
         # Bind the <Return> key to the generate_config function
         self.state_entry.bind("<Return>", lambda event: generate_config(self.state_entry))
+
+        # Bind the <Return> key to the generate_config function
+        self.state_entry.bind("<Return>", lambda event: generate_ip_config(self.ip_interface, self.usable_in_cidr, self.vrf_number, self.gw_ip, self.network_in_cidr))
 
     # Define copy_initial_command as a method of IMEICommandGenerator
     def copy_initial_command(self):

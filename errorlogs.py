@@ -7,6 +7,7 @@ class InvalidStateException(Exception):
 class InvalidIMEIException(Exception):
     pass
 
+# Set all the error logging in this class
 class ErrorLogging :
      
 

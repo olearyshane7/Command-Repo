@@ -1,12 +1,12 @@
 import unittest
-from UpdateIpConfig import generate_ip_config
 from tkinter import Tk, ttk, messagebox
 from myapp import IMEICommandGenerator
 import pyperclip
+from UpdateIPConfig import generate_ip_config
 
 class TestUpdateIpConfig(unittest.TestCase):
     def test_generate_config(self):
-        config_instance = UpdateIpConfig("eth0", "192.168.1.1/24", 100, "10.0.0.1", "172.16.0.0/24")
+        config_instance = generate_ip_config("eth0", "192.168.1.1/24", 100, "10.0.0.1", "172.16.0.0/24")
         generated_config = config_instance.generate_config()
         expected_config = """
 interface ip eth0
@@ -36,7 +36,7 @@ class TestIMEICommandGenerator(unittest.TestCase):
     def setUp(self):
         self.root = Tk()
         self.app = IMEICommandGenerator(self.root)
-        self.app.update_ip_config = UpdateIpConfig("eth0", "192.168.1.1/24", 100, "10.0.0.1", "172.16.0.0/24")
+        self.app.update_ip_config = generate_ip_config("eth0", "192.168.1.1/24", 100, "10.0.0.1", "172.16.0.0/24")
 
     def tearDown(self):
         self.root.destroy()

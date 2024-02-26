@@ -7,15 +7,13 @@ from ipaddress import IPv4Network
 class InvalidIPException(Exception):
     pass
 
-def generate_ip_config(ip_interface, usable_in_cidr, vrf_number, gw_ip, network_in_cidr):
+def generate_ip_config(usable_in_cidr, vrf_number, gw_ip, network_in_cidr):
         
-        ip_interface = ip_interface.get().upper()
         usable_in_cidr = usable_in_cidr.get().upper()
-        vrf_number = int(vrf_number.get().upper())
         gw_ip = gw_ip.get().upper()
         network_in_cidr = network_in_cidr.get().upper()
 
-        if not all([ip_interface, usable_in_cidr, vrf_number, gw_ip, network_in_cidr]):
+        if not all([usable_in_cidr, gw_ip, network_in_cidr]):
             messagebox.showerror("Incomplete Input", "All fields must be filled.")
             logging.debug("Empty Boxes")
             raise InvalidIPException(f"One of the boxes is empty") 
@@ -26,26 +24,27 @@ def generate_ip_config(ip_interface, usable_in_cidr, vrf_number, gw_ip, network_
             return
 
         config_ip_template = f"""
-interface ip {ip_interface}
-    ip-addr {usable_in_cidr}
-    back
-
-vrf "public-vrf-{vrf_number}"
-    ip-route 0.0.0.0/0
-        gateway "{gw_ip}"
-    back
-
+interface ip-2
+ip-addr {usable_in_cidr}
+back
+-------------------------------------------
+vrf "public-vrf-2"
+ip-route 0.0.0.0/0
+gateway "{gw_ip}"
+back
+-------------------------------------------
 ip-route {network_in_cidr}
-    interface "{ip_interface}"
-    back
-
+interface "ip-2"
+back
+back
+-------------------------------------------   
 applications
-    hybrid-wan
-        profile basic
-            interfaces
-                wan-port {ip_interface}
-                    gateway-ip {gw_ip}
-            commit
+hybrid-wan
+profile basic
+interfaces
+wan-port ip-2
+gateway-ip {gw_ip}
+commit
 """
         
         pyperclip.copy(config_ip_template)

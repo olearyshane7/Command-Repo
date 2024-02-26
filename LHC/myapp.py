@@ -52,21 +52,9 @@ class IMEICommandGenerator:
             self.row_num += 1
 
         # Create input fields for UpdateIpConfig parameters
-        ttk.Label(master, text="IP Interface:").grid(row=self.row_num, column=0, padx=5, pady=5, sticky="w")
-        self.ip_interface = ttk.Entry(master, font=("Helvetica", 12), width=20)
-        self.ip_interface.grid(row=self.row_num, column=1, padx=5, pady=5)
-
-        self.row_num += 1
-
         ttk.Label(master, text="Usable CIDR:").grid(row=self.row_num, column=0, padx=5, pady=5, sticky="w")
         self.usable_in_cidr = ttk.Entry(master, font=("Helvetica", 12), width=20)
         self.usable_in_cidr.grid(row=self.row_num, column=1, padx=5, pady=5)
-
-        self.row_num += 1
-
-        ttk.Label(master, text="VRF Number:").grid(row=self.row_num, column=0, padx=5, pady=5, sticky="w")
-        self.vrf_number = ttk.Entry(master, font=("Helvetica", 12), width=20)
-        self.vrf_number.grid(row=self.row_num, column=1, padx=5, pady=5)
 
         self.row_num += 1
 
@@ -99,7 +87,7 @@ class IMEICommandGenerator:
         self.state_entry.bind("<Return>", lambda event: generate_config(self.state_entry))
 
         # Bind the <Return> key to the generate_config function
-        self.state_entry.bind("<Return>", lambda event: generate_ip_config(self.ip_interface, self.usable_in_cidr, self.vrf_number, self.gw_ip, self.network_in_cidr))
+        self.state_entry.bind("<Return>", lambda event: generate_ip_config(self.usable_in_cidr, self.gw_ip, self.network_in_cidr))
 
     # Define copy_initial_command as a method of IMEICommandGenerator
     def copy_initial_command(self):

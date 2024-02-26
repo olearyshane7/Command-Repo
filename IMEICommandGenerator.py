@@ -21,11 +21,9 @@ class IMEICommandGenerator:
                                                                                                columnspan=2, pady=10)
 
         # Create input field for IMEI
-        ttk.Label(master, text="IMEI:").grid(row=1, column=0, padx=5, pady=5, sticky="w")
-        self.imei_frame = ttk.Frame(master, relief="groove", borderwidth=2)
-        self.imei_frame.grid(row=1, column=1, padx=5, pady=5, sticky="ew")
-        self.imei_entry = ttk.Entry(self.imei_frame, font=("Helvetica", 12), width=17)
-        self.imei_entry.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
+        tk.Label(master, text="IMEI:").grid(row=1, column=0, padx=5, pady=5, sticky="w")
+        self.imei_entry = tk.Entry(master, font=("Helvetica", 12), width=20)
+        self.imei_entry.grid(row=1, column=1, padx=(0, 100), pady=5, sticky="e")
 
         master.geometry("700x600")  # Set initial window size
 

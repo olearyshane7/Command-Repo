@@ -27,25 +27,25 @@ def generate_ip_config(ip_interface, usable_in_cidr, vrf_number, gw_ip, network_
 
         config_ip_template = f"""
 interface ip {ip_interface}
-    ip-addr {usable_in_cidr}
-    back
+ip-addr {usable_in_cidr}
+back
 
 vrf "public-vrf-{vrf_number}"
-    ip-route 0.0.0.0/0
-        gateway "{gw_ip}"
-    back
+ip-route 0.0.0.0/0
+gateway "{gw_ip}"
+back
 
 ip-route {network_in_cidr}
-    interface "{ip_interface}"
-    back
+interface "{ip_interface}"
+back
 
 applications
-    hybrid-wan
-        profile basic
-            interfaces
-                wan-port {ip_interface}
-                    gateway-ip {gw_ip}
-            commit
+hybrid-wan
+profile basic
+interfaces
+wan-port {ip_interface}
+gateway-ip {gw_ip}
+commit
 """
         
         pyperclip.copy(config_ip_template)

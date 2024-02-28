@@ -2,8 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 import pyperclip
 import logging
-from ipaddress import IPv4Network 
-
+from ipaddress import IPv4Network
 
 class InvalidIPException(Exception):
     pass
@@ -64,9 +63,4 @@ commit
         pyperclip.copy(config_ip_template)
 
         messagebox.showinfo("Config Generated", "Configuration copied to clipboard.")
-
-
-
-
-
 

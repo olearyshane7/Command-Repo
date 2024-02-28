@@ -9,7 +9,7 @@ import command_generator
 import command_data
 from UpdateIPConfig import generate_ip_config
 from ipaddress import IPv4Network
-
+import webbrowser 
 
 class IMEICommandGenerator:
     def __init__(self, master):
@@ -25,7 +25,7 @@ class IMEICommandGenerator:
         self.imei_entry = tk.Entry(master, font=("Helvetica", 12), width=20)
         self.imei_entry.grid(row=1, column=1, padx=(0, 100), pady=5, sticky="e")
 
-        master.geometry("700x600")  # Set initial window size
+        master.geometry("800x800")  # Set initial window size
 
         self.row_num = 2
 
@@ -76,7 +76,7 @@ class IMEICommandGenerator:
         # Button to update the values
         update_button = ttk.Button(master, text="Update WAN IPs", command=lambda: generate_ip_config(self.usable_in_cidr, self.gw_ip, self.network_in_cidr))
         update_button.grid(row=17, column=0, padx=40, pady=5, sticky="e")
-
+        
         # Button to calculate network CIDR
         calculate_button = ttk.Button(master, text="Calculate Network CIDR", command=self.calculate_network_cidr)
         calculate_button.grid(row=17, column=1, padx=40, pady=5, sticky="e")
@@ -85,11 +85,16 @@ class IMEICommandGenerator:
         generate_button = ttk.Button(master, text="Generate VZ profile Config", command=lambda: generate_config(self.state_entry))
         generate_button.grid(row=18, column=0, padx=40, pady=5, sticky="e")
 
-        # Bind the <Return> key to the generate_config function
-        self.state_entry.bind("<Return>", lambda event: generate_config(self.state_entry))
+        # Create input field for foritage ip
+        self.usable_in_cidr_fortigate = ttk.Entry(master, font=("Helvetica", 12), width=20)
+        self.usable_in_cidr_fortigate.grid(row=20, column=1, padx=5, pady=5)
+        
+        # Button to generate the foritgate link
+        copy_link_button = ttk.Button(master, text="Fortigate Link", command= self.generate_fortigate_link)
+        copy_link_button.grid(row=25, column=1, padx=40, pady=5)
 
         # Bind the <Return> key to the generate_config function
-        self.state_entry.bind("<Return>", lambda event: generate_ip_config(self.usable_in_cidr, self.gw_ip, self.network_in_cidr))
+        self.state_entry.bind("<Return>", lambda event: generate_config(self.state_entry))
 
 
     def calculate_network_cidr(self):
@@ -100,8 +105,17 @@ class IMEICommandGenerator:
             calculated_cidr = IPv4Network(f"{network_cidr.network_address}/{32 - host_bits}", strict=False)
             self.network_in_cidr.delete(0, tk.END)
             self.network_in_cidr.insert(0, str(calculated_cidr))
+
         except ValueError:
-            messagebox.showerror("Invalid Input", "Usable CIDR must be a valid IPv4 address in the format 192.168.1.1/24")    
+            messagebox.showerror("Invalid Input", "Usable CIDR must be a valid IPv4 address in the format 192.168.1.1/24") 
+
+
+    def generate_fortigate_link(self) :
+        usable_in_cidr_fortigate = self.usable_in_cidr_fortigate.get()
+        self.open_link(f"https://{usable_in_cidr_fortigate}:60481")
+    
+    def open_link(usable_in_cidr_fortigate, link):
+        webbrowser.open(link)             
 
     # Define copy_initial_command as a method of IMEICommandGenerator
     def copy_initial_command(self):

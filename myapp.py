@@ -9,14 +9,19 @@ import command_generator
 import command_data
 # command_generator.py
 from IMEICommandGenerator import IMEICommandGenerator
-from MainApp import LHCTool
 
 def lhc_button_click():
 
-    # Move the relevant code here
     root = tk.Tk()
     app = IMEICommandGenerator(root)
     root.mainloop()
+
+# def ws_button_click():
+
+#     # Move the relevant code here
+#     root = tk.Tk()
+#     app = IMEICommandGenerator(root)
+#     root.mainloop()    
 
 # Create the main window
 root = tk.Tk()

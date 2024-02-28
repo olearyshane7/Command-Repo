@@ -53,3 +53,7 @@
 2024-02-26 13:40:56,807 - DEBUG - An error occurred: Blank box
 2024-02-26 13:48:56,427 - ERROR - Invalid state entered:  - Invalid state entered: 
 2024-02-26 13:51:43,693 - ERROR - Invalid state entered:  - Invalid state entered: 
+2024-02-28 09:36:10,455 - DEBUG - An error occurred: IMEI too short
+2024-02-28 09:36:12,147 - DEBUG - An error occurred: IMEI too short
+2024-02-28 09:36:13,326 - DEBUG - An error occurred: IMEI too short
+2024-02-28 09:36:14,807 - DEBUG - An error occurred: IMEI too short

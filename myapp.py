@@ -10,7 +10,6 @@ import command_data
 # command_generator.py
 from IMEICommandGenerator import IMEICommandGenerator
 
-
 # Create the main window
 root = tk.Tk()
 

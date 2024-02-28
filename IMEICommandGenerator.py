@@ -8,7 +8,7 @@ from helpers import generate_config
 import command_generator
 import command_data
 from UpdateIPConfig import generate_ip_config
-
+from ipaddress import IPv4Network
 
 
 class IMEICommandGenerator:
@@ -77,15 +77,31 @@ class IMEICommandGenerator:
         update_button = ttk.Button(master, text="Update IPs", command=lambda: generate_ip_config(self.usable_in_cidr, self.gw_ip, self.network_in_cidr))
         update_button.grid(row=17, column=0, padx=40, pady=5, sticky="w")
 
+        # Button to calculate network CIDR
+        calculate_button = ttk.Button(master, text="Calculate Network CIDR", command=self.calculate_network_cidr)
+        calculate_button.grid(row=17, column=1, padx=40, pady=5, sticky="n")
+
         # Button to generate the configuration
         generate_button = ttk.Button(master, text="Generate VZ profile Config", command=lambda: generate_config(self.state_entry))
-        generate_button.grid(row=17, column=0, padx=40, pady=5, sticky="e")     
+        generate_button.grid(row=17, column=0, padx=40, pady=5, sticky="e")
 
         # Bind the <Return> key to the generate_config function
         self.state_entry.bind("<Return>", lambda event: generate_config(self.state_entry))
 
         # Bind the <Return> key to the generate_config function
         self.state_entry.bind("<Return>", lambda event: generate_ip_config(self.usable_in_cidr, self.gw_ip, self.network_in_cidr))
+
+
+    def calculate_network_cidr(self):
+        usable_cidr = self.usable_in_cidr.get()
+        try:
+            network_cidr = IPv4Network(usable_cidr, strict=False)
+            host_bits = network_cidr.max_prefixlen - network_cidr.prefixlen
+            calculated_cidr = IPv4Network(f"{network_cidr.network_address}/{32 - host_bits}", strict=False)
+            self.network_in_cidr.delete(0, tk.END)
+            self.network_in_cidr.insert(0, str(calculated_cidr))
+        except ValueError:
+            messagebox.showerror("Invalid Input", "Usable CIDR must be a valid IPv4 address in the format 192.168.1.1/24")    
 
     # Define copy_initial_command as a method of IMEICommandGenerator
     def copy_initial_command(self):

@@ -74,16 +74,16 @@ class IMEICommandGenerator:
         self.state_entry.grid(row=self.row_num, column=1, padx=5, pady=5)
 
         # Button to update the values
-        update_button = ttk.Button(master, text="Update IPs", command=lambda: generate_ip_config(self.usable_in_cidr, self.gw_ip, self.network_in_cidr))
-        update_button.grid(row=17, column=0, padx=40, pady=5, sticky="w")
+        update_button = ttk.Button(master, text="Update WAN IPs", command=lambda: generate_ip_config(self.usable_in_cidr, self.gw_ip, self.network_in_cidr))
+        update_button.grid(row=17, column=0, padx=40, pady=5, sticky="e")
 
         # Button to calculate network CIDR
         calculate_button = ttk.Button(master, text="Calculate Network CIDR", command=self.calculate_network_cidr)
-        calculate_button.grid(row=17, column=1, padx=40, pady=5, sticky="n")
+        calculate_button.grid(row=17, column=1, padx=40, pady=5, sticky="e")
 
         # Button to generate the configuration
         generate_button = ttk.Button(master, text="Generate VZ profile Config", command=lambda: generate_config(self.state_entry))
-        generate_button.grid(row=17, column=0, padx=40, pady=5, sticky="e")
+        generate_button.grid(row=18, column=0, padx=40, pady=5, sticky="e")
 
         # Bind the <Return> key to the generate_config function
         self.state_entry.bind("<Return>", lambda event: generate_config(self.state_entry))

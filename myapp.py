@@ -9,12 +9,24 @@ import command_generator
 import command_data
 # command_generator.py
 from IMEICommandGenerator import IMEICommandGenerator
+from MainApp import LHCTool
+
+def lhc_button_click():
+
+    # Move the relevant code here
+    root = tk.Tk()
+    app = IMEICommandGenerator(root)
+    root.mainloop()
 
 # Create the main window
 root = tk.Tk()
 
-# Create an instance of the IMEICommandGenerator class
-app = IMEICommandGenerator(root)
+# Increase the window size
+root.geometry("200x200")
+
+# Create a button with the label "lhc" that calls the lhc_button_click function when clicked
+lhc_button = ttk.Button(root, text="lhc", command=lhc_button_click)
+lhc_button.pack()
 
 # Run the Tkinter event loop
 root.mainloop()

@@ -8,6 +8,10 @@ from helpers import generate_config
 import command_generator
 import command_data
 from tkinter import simpledialog
+from calculateNetworkIP import calculate_network_ip
+from ipaddress import IPv4Network
+from calculateCIDR import calculate_cidr
+
 
 
 
@@ -87,37 +91,59 @@ class IMEICommandGenerator:
     
     def changeWan_script(self):
         imei = self.imei_entry.get()
-        gateway = simpledialog.askstring("Input", "Enter the gateway no CIDR:")
-        usable_ip = simpledialog.askstring("Input", "Enter the usable IP/CIDR:")
-        net_ip = simpledialog.askstring("Input", "Enter the net IP/CIDR:")
+        gateway = simpledialog.askstring("Input", "Enter the gateway (no CIDR):")
+        usable_ip = simpledialog.askstring("Input", "Enter the usable (no CIDR):")
+        subnet_mask_input = simpledialog.askstring("Input", "Enter the subnet mask:")
 
-        config = f"""
-config
-interface ip ip-2
-ip-addr {usable_ip}
-back
------------------------------------
-vrf "public-vrf-2"
-ip-route 0.0.0.0/0
-gateway "{gateway}"
-back
------------------------------------ 
-ip-route {net_ip}
-interface "ip-2"
-back
-back
------------------------------------
-applications
-hybrid-wan
-profile basic
-interfaces
-wan-port ip-2
-gateway-ip {gateway}
-commit
-        """
+        # Calculate CIDR of subnet mask
+        cidr = calculate_cidr(subnet_mask_input)
 
-        self.copy_command_to_clipboard(config)
-        messagebox.showinfo("New Configuration", f"New configuration copied to clipboard:\n\n{config}")
+        if cidr is not None:
+            # Get usable IP with CIDR
+            usable_ip_cidr = f"{usable_ip}/{cidr}"
+
+            # Get gateway IP with CIDR
+            gateway_cidr = self.append_cidr_to_ip(gateway)
+
+            # Calculate the network IP based on the gateway IP and subnet mask
+            network_ip = calculate_network_ip(gateway, subnet_mask_input)
+
+            # Append CIDR to network IP
+            network_ip_cidr = f"{network_ip}/{cidr}"
+
+            config = f"""
+        config
+        interface ip ip-2
+        ip-addr {usable_ip_cidr}
+        back
+        -----------------------------------
+        vrf "public-vrf-2"
+        ip-route 0.0.0.0/0
+        gateway "{gateway_cidr}"
+        back
+        ----------------------------------- 
+        ip-route {network_ip_cidr}
+        interface "ip-2"
+        back
+        back
+        -----------------------------------
+        applications
+        hybrid-wan
+        profile basic
+        interfaces
+        wan-port ip-2
+        gateway-ip {gateway_cidr}
+        commit
+            """
+
+            self.copy_command_to_clipboard(config)
+            messagebox.showinfo("New Configuration", f"New configuration copied to clipboard:\n\n{config}")
+
+
+    def append_cidr_to_ip(self, ip):
+        return ip
+
+
 
     def copy_command_to_clipboard(self, command):
         pyperclip.copy(command)

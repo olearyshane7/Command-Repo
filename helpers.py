@@ -26,15 +26,15 @@ def generate_config(state_entry):
             raise InvalidStateException(f"Invalid state entered: {state}") 
 
         config_template = f"""
-configure
-    pdp-profile "VZ-Static"
-        apn-id "1"
-            apn {regional_apn}
-            back
-        mobile-country-code "311"
-        mobile-network-code "480"
-        back
-    commit
+configuration
+pdp-profile "VZ-Static"
+apn-id "1"
+apn {regional_apn}
+back
+mobile-country-code "311"
+mobile-network-code "480"
+back
+commit
 main"""
         pyperclip.copy(config_template)
         messagebox.showinfo("Config Generated", "Configuration copied to clipboard.")

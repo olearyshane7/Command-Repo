@@ -30,7 +30,7 @@ class IMEICommandGenerator:
         # ttk.Button(master, text="Test", command=self.test_initial_command).grid(row=0, column=2,
         #                                                                                        columnspan=1, pady=10)        
 
-
+        
         # Create input field for IMEI
         ttk.Label(master, text="IMEI:").grid(row=1, column=0, padx=5, pady=5, sticky="w")
         self.imei_frame = ttk.Frame(master, relief="groove", borderwidth=2)
@@ -77,6 +77,14 @@ class IMEICommandGenerator:
         # Button to change Wan script
         changeWan_button = ttk.Button(master, text="Change Wan Script", command=self.changeWan_script)
         changeWan_button.grid(row=self.row_num + 2, columnspan=2, pady=10)
+
+        # Create input field for foritage ip
+        # self.usable_in_cidr_fortigate = ttk.Entry(master, font=("Helvetica", 12), width=20)
+        # self.usable_in_cidr_fortigate.grid(row=20, column=1, padx=5, pady=5)
+        
+        # Button to generate the foritgate link
+        # copy_link_button = ttk.Button(master, text="Fortigate Link", command= self.generate_fortigate_link)
+        # copy_link_button.grid(row=25, column=1, padx=40, pady=5)
 
         # Bind the <Return> key to the generate_config function
         self.state_entry.bind("<Return>", lambda event: generate_config(self.state_entry))
@@ -143,7 +151,13 @@ class IMEICommandGenerator:
     def append_cidr_to_ip(self, ip):
         return ip
 
-
+    # Opens up the fortigate GUI loging page via usable 
+    # def generate_fortigate_link(self) :
+    #     usable_in_cidr_fortigate = self.usable_in_cidr_fortigate.get()
+    #     self.open_link(f"https://{usable_in_cidr_fortigate}:60481")
+    
+    # def open_link(usable_in_cidr_fortigate, link):
+    #     webbrowser.open(link) 
 
     def copy_command_to_clipboard(self, command):
         pyperclip.copy(command)

@@ -27,14 +27,14 @@ def generate_ip_config( usable_in_cidr, gw_ip, network_in_cidr):
         try:
             IPv4Network(gw_ip, strict=False)
         except ValueError:
-            messagebox.showerror("Invalid Input", "Usable CIDR must be a valid IPv4 address in the format 192.168.1.1/24")
+            messagebox.showerror("Invalid Input", "Gateway must be a valid IPv4 address in the format 192.168.1.1/24")
             return
 
         #  Netowrk cidr
         try:
             IPv4Network(network_in_cidr, strict=False)
         except ValueError:
-            messagebox.showerror("Invalid Input", "Usable CIDR must be a valid IPv4 address in the format 192.168.1.1/24")
+            messagebox.showerror("Invalid Input", "Network cidr must be a valid IPv4 address in the format 192.168.1.1/24")
             return
 
         config_ip_template = f"""

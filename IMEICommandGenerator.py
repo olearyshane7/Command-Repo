@@ -109,7 +109,7 @@ class IMEICommandGenerator:
         except ValueError:
             messagebox.showerror("Invalid Input", "Usable CIDR must be a valid IPv4 address in the format 192.168.1.1/24") 
 
-
+    # Opens up the fortigate GUI loging page via usable 
     def generate_fortigate_link(self) :
         usable_in_cidr_fortigate = self.usable_in_cidr_fortigate.get()
         self.open_link(f"https://{usable_in_cidr_fortigate}:60481")

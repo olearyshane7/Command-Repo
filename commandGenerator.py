@@ -53,14 +53,15 @@ def generate_config():
             regional_apn = states[0]
             break
 
-    config_template = f"""configure
+    config_template = f"""
+configure
 pdp-profile "VZ-Static"
-    apn-id "1"
-      apn {regional_apn}
-      back
-    mobile-country-code "311"
-    mobile-network-code "480"
-    back
+apn-id "1"
+apn {regional_apn}
+back
+mobile-country-code "311"
+mobile-network-code "480"
+back
 commit
 main"""
     pyperclip.copy(config_template)

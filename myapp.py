@@ -4,19 +4,10 @@ import pyperclip
 import random
 import logging
 from tkinter.constants import END
-from helpers import generate_config
-import command_generator
-import command_data
 # command_generator.py
 from IMEICommandGenerator import IMEICommandGenerator
 
 def lhc_button_click():
-
-    root = tk.Tk()
-    app = IMEICommandGenerator(root)
-    root.mainloop()
-
-def fortigate_button_click():
 
     root = tk.Tk()
     app = IMEICommandGenerator(root)

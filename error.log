@@ -63,3 +63,19 @@
 2024-02-28 15:06:08,901 - DEBUG - An error occurred: Blank box
 2024-02-28 15:06:10,884 - DEBUG - An error occurred: Blank box
 2024-02-28 15:12:36,943 - DEBUG - An error occurred: Blank box
+2024-03-07 17:33:22,331 - DEBUG - Empty Boxes
+2024-03-07 17:33:23,775 - ERROR - Invalid state entered:  - Invalid state entered: 
+2024-03-07 17:33:27,104 - ERROR - Invalid state entered:  - Invalid state entered: 
+2024-03-07 17:33:41,977 - DEBUG - An error occurred: Blank box
+2024-03-07 17:33:43,397 - DEBUG - An error occurred: Blank box
+2024-03-07 17:33:45,198 - DEBUG - An error occurred: Blank box
+2024-03-07 17:33:46,488 - DEBUG - An error occurred: Blank box
+2024-03-07 17:33:54,773 - DEBUG - An error occurred: IMEI too long
+2024-03-07 17:33:57,788 - DEBUG - An error occurred: IMEI too long
+2024-03-07 17:34:00,229 - DEBUG - An error occurred: IMEI too long
+2024-03-07 17:34:06,256 - DEBUG - An error occurred: IMEI too short
+2024-03-07 17:34:08,135 - DEBUG - An error occurred: IMEI too short
+2024-03-07 17:34:10,173 - DEBUG - An error occurred: IMEI too short
+2024-03-07 17:34:11,602 - DEBUG - An error occurred: IMEI too short
+2024-03-07 17:34:12,971 - DEBUG - An error occurred: IMEI too short
+2024-03-07 17:34:17,686 - DEBUG - An error occurred: IMEI too short

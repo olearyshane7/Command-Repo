@@ -16,6 +16,12 @@ def lhc_button_click():
     app = IMEICommandGenerator(root)
     root.mainloop()
 
+def fortigate_button_click():
+
+    root = tk.Tk()
+    app = IMEICommandGenerator(root)
+    root.mainloop()
+
 # def ws_button_click():
 
 #     # Move the relevant code here

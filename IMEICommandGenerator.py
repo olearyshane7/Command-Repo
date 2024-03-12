@@ -10,6 +10,7 @@ import command_data
 from UpdateIPConfig import generate_ip_config
 from ipaddress import IPv4Network
 import webbrowser 
+from signalstrength import signalstrength
 
 class IMEICommandGenerator:
     def __init__(self, master):
@@ -25,7 +26,7 @@ class IMEICommandGenerator:
         self.imei_entry = tk.Entry(master, font=("Helvetica", 12), width=20)
         self.imei_entry.grid(row=1, column=1, padx=(0, 100), pady=5, sticky="e")
 
-        master.geometry("800x800")  # Set initial window size
+        master.geometry("1000x1000")  # Set initial window size
 
         self.row_num = 2
 
@@ -92,6 +93,42 @@ class IMEICommandGenerator:
         # Button to generate the foritgate link
         copy_link_button = ttk.Button(master, text="Fortigate Link", command= self.generate_fortigate_link)
         copy_link_button.grid(row=25, column=1, padx=40, pady=5)
+
+        # Create input fields for parameters
+        tk.Label(master, text="RSSI (dBm):").grid(row=27, column=0, padx=5, pady=5, sticky="w")
+        self.rssi_entry = tk.Entry(master, font=("Helvetica", 12), width=20)
+        self.rssi_entry.grid(row=27, column=1, padx=5, pady=5)
+
+        # Create a button to calculate signal strength
+        self.calculate_button = ttk.Button(master, text="Calculate RSSI", command= lambda: signalstrength.calculate_rssi_signal_strength(self.rssi_entry))
+        self.calculate_button.grid(row=29, columnspan=2, pady=5)
+
+        # Create input fields for parameters
+        tk.Label(master, text="SNR (dB):").grid(row=30, column=0, padx=5, pady=5, sticky="w")
+        self.snr_entry = tk.Entry(master, font=("Helvetica", 12), width=20)
+        self.snr_entry.grid(row=30, column=1, padx=5, pady=5)
+
+        # Create a button to calculate signal strength
+        self.calculate_button = ttk.Button(master, text="Calculate SNR", command= lambda: signalstrength.calculate_snr_signal_strength(self.snr_entry))
+        self.calculate_button.grid(row=31, columnspan=2, pady=5)
+
+        # Create input fields for parameters
+        tk.Label(master, text="RSRQ (dB):").grid(row=32, column=0, padx=5, pady=5, sticky="w")
+        self.rsrq_entry = tk.Entry(master, font=("Helvetica", 12), width=20)
+        self.rsrq_entry.grid(row=32, column=1, padx=5, pady=5)
+
+        # Create a button to calculate signal strength
+        self.calculate_button = ttk.Button(master, text="Calculate RSRQ", command= lambda: signalstrength.calculate_rsrq_signal_strength(self.rsrq_entry))
+        self.calculate_button.grid(row=33, columnspan=2, pady=5)
+
+        # Create input fields for parameters
+        tk.Label(master, text="RSRP (dBm):").grid(row=34, column=0, padx=5, pady=5, sticky="w")
+        self.rsrp_entry = tk.Entry(master, font=("Helvetica", 12), width=20)
+        self.rsrp_entry.grid(row=34, column=1, padx=5, pady=5)
+
+        # Create a button to calculate signal strength
+        self.calculate_button = ttk.Button(master, text="Calculate RSRP", command= lambda: signalstrength.calculate_rsrp_signal_strength(self.rsrp_entry))
+        self.calculate_button.grid(row=35, columnspan=2, pady=5)
 
         # Bind the <Return> key to the generate_config function
         self.state_entry.bind("<Return>", lambda event: generate_config(self.state_entry))

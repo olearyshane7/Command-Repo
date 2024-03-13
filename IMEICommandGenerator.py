@@ -26,7 +26,7 @@ class IMEICommandGenerator:
         self.imei_entry = tk.Entry(master, font=("Helvetica", 12), width=20)
         self.imei_entry.grid(row=1, column=1, padx=(0, 100), pady=5, sticky="e")
 
-        master.geometry("1000x1000")  # Set initial window size
+        master.geometry("1000x950")  # Set initial window size
 
         self.row_num = 2
 

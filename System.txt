@@ -1,0 +1,70 @@
+System
+"View System Status" -> get system status
+"Generate Support Report" -> exec tac report
+"List CLI Commands" -> tree
+"CLI Help Tips" -> <command> ? / tab [filter]
+"Filter CLI Outputs" -> <command> | grep [filter]
+"Monitor CLI WebGUI Changes" -> diag debug cli 8
+"Check Performance Info" -> get system performance status
+"View Process List" -> diag sys top [sec] [number]
+"See Crash Log History" -> diag debug crashlog history
+"Read Crash Log" -> diag debug crashlog read
+
+
+
+Network
+"List Interface IPs" -> diag ip address list
+"Display IP Pool List" -> diag firewall ippool list
+"Check Interface List" -> diag netlink interface list
+"Retrieve ARP Table" -> diag ip arp list / get system arp
+"Clear ARP Table" -> exec clear system arp table
+"Run Ping Test" -> exec ping x.x.x.x
+"Perform Trace Route" -> exec traceroute x.x.x.x
+"Start Telnet Utility" -> exec telnet x.x.x.x[port]
+
+
+Traffic Processing
+"App Layer Debugging" -> diag debug app [app] [level]
+"Proxy Operation Monitor" -> diag test appl [app] [test_level]
+"Toggle Timestamp in Console" -> diag debug console timestamp [enable|disable]
+"Toggle Debug Output" -> diag debug [enable|disable]
+"Reset Debug Levels" -> diag debug reset
+"Filter Session List" -> diag sys session filter
+"List Sessions" -> diag sys session list [expect]
+"Clear Sessions" -> diag sys session clear
+"Display Session Stats" -> diag sys session stat
+"Lookup Firewall Policy" -> diag firewall iprope clear 100004 [<id>]
+
+
+High Availability
+"Manage HA Nodes" -> exec ha manage [index] [admin]
+"Check HA Status" -> get sys ha status
+"View HA Event History" -> diag sys ha history read
+"Monitor HA Uptime" -> diag sys ha reset-uptime
+"HA Debug Application" -> diag debug app ike -1
+"Bypass HA Revision Check" -> exec ha ignore-hardware-revision status / enable / disable
+"Check Failover Status" -> exec ha failover status
+"Trigger HA Failover" -> exec ha failover set <cluster_id>
+
+
+Integrated Per-User
+"Check Client Traffic" -> diag traffic client <name>
+"Check Port Traffic" -> diag traffic port [port]
+"Monitor Source IP Traffic" -> diag traffic source_ip
+"Monitor Server IP Traffic" -> diag traffic server_ip
+
+
+General Routing Troubleshooting
+"View Routing Table" -> get router info routing-table all
+"Routing Decision Check" -> get router info routing-table details x.x.x.x
+"List Inactive Routes" -> get router info routing-table database
+"Examine Kernel Routing Info" -> get router info kernel
+"Review Policy Routes" -> diag firewall proute list
+"Check Route Cache" -> diag ip rcache list
+"Protocol Route Information" -> get router info protocols
+"Restart Routing Process" -> exec router restart
+"Link Monitor Status" -> diag sys link-monitor status/interface/launch
+
+Cluster Synchronisation
+"Display Config Checksums" -> diag sys ha checksum cluster
+"Recalculate Checksums" -> diag sys ha checksum recalculate

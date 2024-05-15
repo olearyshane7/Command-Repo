@@ -38,6 +38,7 @@ def generate_ip_config( usable_in_cidr, gw_ip, network_in_cidr):
             return
 
         config_ip_template = f"""
+configuration
 interface ip ip-2
 ip-addr {usable_in_cidr}
 back
@@ -58,7 +59,9 @@ profile basic
 interfaces
 wan-port ip-2
 gateway-ip {gw_ip}
+--------------------------------------
 commit
+main
 """
         
         pyperclip.copy(config_ip_template)

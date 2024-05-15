@@ -26,7 +26,7 @@ def generate_config(state_entry):
             raise InvalidStateException(f"Invalid state entered: {state}") 
 
         config_template = f"""
-configure
+configuration
 pdp-profile "VZ-Static"
 apn-id "1"
 apn {regional_apn}

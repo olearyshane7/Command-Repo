@@ -10,25 +10,26 @@ class TestUpdateIpConfig(unittest.TestCase):
         generated_config = config_instance.generate_config()
         expected_config = """
 interface ip eth0
-    ip-addr 192.168.1.1/24
-    back
-
+ip-addr 192.168.1.1/24
+back
+-------------------------------------
 vrf "public-vrf-100"
-    ip-route 0.0.0.0/0
-        gateway "10.0.0.1"
-    back
-
+ip-route 0.0.0.0/0
+gateway "10.0.0.1"
+back
+---------------------------------------
 ip-route 172.16.0.0/24
-    interface "eth0"
-    back
-
+interface "eth0"
+back
+back
+--------------------------------------
 applications
-    hybrid-wan
-        profile basic
-            interfaces
-                wan-port eth0
-                    gateway-ip 10.0.0.1
-            commit
+hybrid-wan
+profile basic
+interfaces
+wan-port eth0
+gateway-ip 10.0.0.1
+commit
 """
         self.assertEqual(generated_config.strip(), expected_config.strip())
 

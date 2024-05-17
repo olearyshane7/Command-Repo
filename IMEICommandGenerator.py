@@ -90,9 +90,6 @@ class IMEICommandGenerator:
         self.usable_in_cidr_fortigate = ttk.Entry(master, font=("Helvetica", 12), width=20)
         self.usable_in_cidr_fortigate.grid(row=20, column=1, padx=5, pady=5)
         
-        # Button to generate the foritgate link
-        copy_link_button = ttk.Button(master, text="Fortigate Link", command= self.generate_fortigate_link)
-        copy_link_button.grid(row=25, column=1, padx=40, pady=5)
 
         # Create input fields for parameters
         tk.Label(master, text="RSSI (dBm):").grid(row=27, column=0, padx=5, pady=5, sticky="w")
@@ -145,14 +142,7 @@ class IMEICommandGenerator:
 
         except ValueError:
             messagebox.showerror("Invalid Input", "Usable CIDR must be a valid IPv4 address in the format 192.168.1.1/24") 
-
-    # Opens up the fortigate GUI loging page via usable 
-    def generate_fortigate_link(self) :
-        usable_in_cidr_fortigate = self.usable_in_cidr_fortigate.get()
-        self.open_link(f"https://{usable_in_cidr_fortigate}:60481")
-    
-    def open_link(usable_in_cidr_fortigate, link):
-        webbrowser.open(link)             
+      
 
     # Define copy_initial_command as a method of IMEICommandGenerator
     def copy_initial_command(self):

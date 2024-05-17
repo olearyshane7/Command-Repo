@@ -85,10 +85,6 @@ class IMEICommandGenerator:
         # Button to generate the configuration
         generate_button = ttk.Button(master, text="Generate VZ profile Config", command=lambda: generate_config(self.state_entry))
         generate_button.grid(row=18, column=0, padx=40, pady=5, sticky="e")
-
-        # Create input field for foritage ip
-        self.usable_in_cidr_fortigate = ttk.Entry(master, font=("Helvetica", 12), width=20)
-        self.usable_in_cidr_fortigate.grid(row=20, column=1, padx=5, pady=5)
         
 
         # Create input fields for parameters

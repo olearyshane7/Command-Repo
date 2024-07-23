@@ -35,3 +35,7 @@ root.mainloop()
 
 # Run the Tkinter event loop
 # root.mainloop()
+
+#test IP subnet
+#123.123.12.134/24
+#255.255.255.252

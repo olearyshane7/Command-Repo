@@ -104,7 +104,7 @@ class IMEICommandGenerator:
         generate_button.grid(row=19, column=1, padx=40, pady=5, sticky="e")
 
         # Button to update WAN1 values
-        update_button = ttk.Button(master, text="Update WAN IPs", command=lambda: generate_ip_config(self.usable_in_cidr, self.gw_ip, self.network_in_cidr))
+        update_button = ttk.Button(master, text="Update WAN 1 IPs", command=lambda: generate_ip_config(self.usable_in_cidr, self.gw_ip, self.network_in_cidr))
         update_button.grid(row=20, column=1, padx=40, pady=5, sticky="e")
 
         # Button to update WAN2 values
@@ -118,6 +118,14 @@ class IMEICommandGenerator:
         # Create input field for foritage ip
         self.usable_in_cidr_fortigate = ttk.Entry(master, font=("Helvetica", 12), width=20)
         self.usable_in_cidr_fortigate.grid(row=23, column=1, padx=5, pady=5)
+
+        # Binding events to show/hide placeholder text
+        self.usable_in_cidr_fortigate.bind("<FocusIn>", self.on_entry_focus_in)
+        self.usable_in_cidr_fortigate.bind("<FocusOut>", self.on_entry_focus_out)
+
+        # Initial placeholder text
+        self.placeholder_text = "Usable IP"
+        self.show_placeholder()
         
         # Button to generate the foritgate link
         copy_link_button = ttk.Button(master, text="Fortigate Link", command= self.generate_fortigate_link)
@@ -126,6 +134,19 @@ class IMEICommandGenerator:
         # Bind the <Return> key to the generate_config function
         self.state_entry.bind("<Return>", lambda event: generate_config(self.state_entry))
 
+
+    def on_entry_focus_in(self, event):
+        if self.usable_in_cidr_fortigate.get() == self.placeholder_text:
+            self.usable_in_cidr_fortigate.delete(0, tk.END)
+            self.usable_in_cidr_fortigate.config(foreground='black')  # Optional: Change text color
+
+    def on_entry_focus_out(self, event):
+        if not self.usable_in_cidr_fortigate.get():
+            self.show_placeholder()
+
+    def show_placeholder(self):
+        self.usable_in_cidr_fortigate.insert(0, self.placeholder_text)
+        self.usable_in_cidr_fortigate.config(foreground='grey') 
 
     def calculate_network_cidr(self):
         usable_cidr = self.usable_in_cidr.get()

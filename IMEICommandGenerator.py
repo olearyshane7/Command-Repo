@@ -12,6 +12,7 @@ from ipaddress import IPv4Network
 import webbrowser 
 from updateIpConfig2 import generate_ip_config_two
 from updateFortigateWan2 import generate_ip_config2_fortigate
+from updatetree import generate_ip_config_tree
 
 class IMEICommandGenerator:
     def __init__(self, master):
@@ -117,7 +118,11 @@ class IMEICommandGenerator:
 
         # Create input field for foritage ip
         self.usable_in_cidr_fortigate = ttk.Entry(master, font=("Helvetica", 12), width=20)
-        self.usable_in_cidr_fortigate.grid(row=23, column=1, padx=5, pady=5)
+        self.usable_in_cidr_fortigate.grid(row=24, column=1, padx=5, pady=5)
+
+        # Button to update WAN Tree values
+        update_button = ttk.Button(master, text="Update Tree IPs", command=lambda: generate_ip_config_tree(self.usable_ip, self.gw_ip, self.subnet_mask))
+        update_button.grid(row=23, column=1, padx=40, pady=5, sticky="e")
 
         # Binding events to show/hide placeholder text
         self.usable_in_cidr_fortigate.bind("<FocusIn>", self.on_entry_focus_in)

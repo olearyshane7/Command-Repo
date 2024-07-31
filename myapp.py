@@ -15,7 +15,7 @@ root.mainloop()
 
 # def fg_button_click():
 
-#      # Move the relevant code here 	USPSGRT132209997SYRCNY-SW
+#      # Move the relevant code here 	
 #      root = tk.Tk()
 #      root.mainloop()    
 # Create the main window

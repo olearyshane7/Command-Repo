@@ -36,6 +36,7 @@ config system interface
 edit port2
 unset mode
 set ip {usable_ip} {subnet_mask}
+set allowaccess ping https ssh fgfm
 next
 end
 ---------------------------------------------

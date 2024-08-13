@@ -13,6 +13,7 @@ import webbrowser
 from updateIpConfig2 import generate_ip_config_two
 from updateFortigateWan2 import generate_ip_config2_fortigate
 from updatetree import generate_ip_config_tree
+from updatefortigateDHCP import generate_ip_config2_dhcp_fortigate
 
 class IMEICommandGenerator:
     def __init__(self, master):
@@ -118,11 +119,15 @@ class IMEICommandGenerator:
 
         # Create input field for foritage ip
         self.usable_in_cidr_fortigate = ttk.Entry(master, font=("Helvetica", 12), width=20)
-        self.usable_in_cidr_fortigate.grid(row=24, column=1, padx=5, pady=5)
+        self.usable_in_cidr_fortigate.grid(row=25, column=1, padx=5, pady=5)
 
         # Button to update WAN Tree values
         update_button = ttk.Button(master, text="Update Tree IPs", command=lambda: generate_ip_config_tree(self.usable_ip, self.gw_ip, self.subnet_mask))
         update_button.grid(row=23, column=1, padx=40, pady=5, sticky="e")
+
+        # Button to update WAN2 DHCP values
+        update_button = ttk.Button(master, text="Update Fortigate WAN 2 DHCP", command=lambda: generate_ip_config2_dhcp_fortigate())
+        update_button.grid(row=24, column=1, padx=40, pady=5, sticky="e")
 
         # Binding events to show/hide placeholder text
         self.usable_in_cidr_fortigate.bind("<FocusIn>", self.on_entry_focus_in)
@@ -134,7 +139,7 @@ class IMEICommandGenerator:
         
         # Button to generate the foritgate link
         copy_link_button = ttk.Button(master, text="Fortigate Link", command= self.generate_fortigate_link)
-        copy_link_button.grid(row=25, column=1, padx=40, pady=5)
+        copy_link_button.grid(row=26, column=1, padx=40, pady=5)
 
         # Bind the <Return> key to the generate_config function
         self.state_entry.bind("<Return>", lambda event: generate_config(self.state_entry))

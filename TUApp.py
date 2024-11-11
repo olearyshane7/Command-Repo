@@ -8,7 +8,8 @@ text_options = {
     "Hanger success EZ": "Tech: {Tech} \n Call started on time. Confirmed modem worked properly and moved on to the TU. Connected the modem to port 5 on the router and waited for connection to be shown on mist. When we saw connection on the primary we moved on to connecting the switch from port 4 to port 23. Once it was connected and we pulled the switch config successfully, we moved onto the cutover. Powered down their existing equipment and plugged the new Juniper AP into the switch to check connectivity. After AP connection verified and AP upgraded, we swapped the connections over to the new switch. Tech tested all of the equipment and packed up the equipment. TU success.\n No followup required.",
     "Hanger switch issue": "Tech: {Tech} \n Call started on time. Confirmed modem worked properly and moved on to the TU. Confirmed connection to the router via mist. When we saw connection on the router up, we moved on to connecting the switch from port 4 to port 23. The switch wasn't pulling the config so we plugged the router into the management port and configured a dhcp network to pull the new switch config. Once it was connected and we pulled the switch config successfully, we moved onto the cutover. Powered down their existing equipment and plugged the new Juniper AP into the switch to check connectivity. After AP connection verified and AP upgraded, we swapped the connections over to the new switch. Tech tested all of the equipment and packed up the equipment. TU success.\n No followup required.",
     "USPS Fortiswitch 2 switch": "Tech: {Tech} \n Connected circuits to their proper switch ports and moved onto testing speeds on port 2 and port 3 of the switches. TU success\n No followup required",
-    "USPS Fortiswitch 1 switch": "Tech: {Tech} \n Connected circuit to the switch on port 1 and moved onto testing speeds on port 2 and port 3 of the switches. TU success\n No followup required"
+    "USPS Fortiswitch 1 switch": "Tech: {Tech} \n Connected circuit to the switch on port 1 and moved onto testing speeds on port 2 and port 3 of the switches. TU success\n No followup required",
+    "ACFP Edgeboot": "Tech: {Tech} \n Call started after tech moved AP. Made all of the necessary edgeboot connections and confirmed connectivity via fortigate and edgeboot portal. \n Edgeboot install successful."
 }
 
 # Function to copy text to clipboard
@@ -51,7 +52,8 @@ options = [
     "Hanger success EZ", 
     "Hanger switch issue", 
     "USPS Fortiswitch 2 switch", 
-    "USPS Fortiswitch 1 switch"
+    "USPS Fortiswitch 1 switch",
+    "ACFP Edgeboot"
 ]
 
 for option in options:

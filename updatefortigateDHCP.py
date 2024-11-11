@@ -18,7 +18,6 @@ set dns-server-override disable
 next
 edit port3
 set priority 20
-set allowaccess https ping FMG-access
 next
 end
  

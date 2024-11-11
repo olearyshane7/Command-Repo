@@ -43,28 +43,28 @@ interface lte lte-1
 admin down
 no link-loss-forward
 back
---------------------------------------
+
 interface ip ip-3
 ip-addr {usable_in_cidr}
 back
---------------------------------------
+
 vrf "public-vrf-3"
 ip-route 0.0.0.0/0
 gateway "{gw_ip}"
 back
---------------------------------------
+
 ip-route {network_in_cidr}
 interface "ip-3"
 back
 back
---------------------------------------
+
 applications
 hybrid-wan
 profile basic
 interfaces
 wan-port ip-3
 gateway-ip {gw_ip}
---------------------------------------
+
 commit
 main
 """

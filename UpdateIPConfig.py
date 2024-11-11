@@ -42,24 +42,20 @@ configuration
 interface ip ip-2
 ip-addr {usable_in_cidr}
 back
---------------------------------------
 vrf "public-vrf-2"
 ip-route 0.0.0.0/0
 gateway "{gw_ip}"
 back
---------------------------------------
 ip-route {network_in_cidr}
 interface "ip-2"
 back
 back
---------------------------------------
 applications
 hybrid-wan
 profile basic
 interfaces
 wan-port ip-2
 gateway-ip {gw_ip}
---------------------------------------
 commit
 main
 """

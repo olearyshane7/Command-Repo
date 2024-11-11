@@ -39,7 +39,7 @@ set ip {usable_ip} {subnet_mask}
 set allowaccess ping https ssh fgfm
 next
 end
----------------------------------------------
+
 config router static
 edit 3
 unset dynamic-gateway
@@ -47,7 +47,7 @@ set device port2
 set gateway {gw_ip}
 next
 end
-----------------------------------------------
+
 config sys sdwan
 config members
 edit 3
@@ -56,12 +56,12 @@ set gateway {gw_ip}
 next
 end
 end
------------------------------------------------
+
 config vpn ipsec phase1-interface
 edit SDC-21
 set interface port2
 next
-------------------------------------------------
+
 edit NDC-21
 set interface port2
 next
